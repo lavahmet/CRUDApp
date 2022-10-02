@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Search</title>
+</head>
+<body>
+
+<form th:method="POST" th:action="@{/books/search}">
+  <label for="query">Введите поисковой запрос: </label>
+  <input type="text" id="query" name="query">
+  <br>
+  <input type="submit" value="Искать">
+</form>
+
+<!--/*@thymesVar id="books" type="java.util.List<com.example.crudap.models.Book>"*/-->
+<div th:if="${books}">
+  <div th:if="${books.isEmpty()}">
+    <span>Книга не найдено</span>
+  </div>
+
+  <!--/*@thymesVar id="book" type="com.example.crudapp.models.Book"*/-->
+  <div th:each="book : ${books}">
+    <p th:text="${book.getTitle() + ', ' + book.getAuthor() + ', ' + book.getYear()}">book</p>
+
+    <div th:if="${book.getOwner() != null}">
+      <span>Книта сейчас у: </span>
+      <span th:text="${book.getOwner().getName()}">Person Name</span>
+    </div>
+
+    <div th:if="${book.getOwner() == null}">
+      <span>Книга свободна</span>
+    </div>
+
+    <hr>
+  </div>
+</div>
+
+</body>
+</html>

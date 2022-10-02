@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Show</title>
+</head>
+<body>
+<!--/*@thymesVar id="book" type="com.example.crudapp.models.Book"*/-->
+<p th:text="${book.getTitle() + ', ' + book.getAuthor() + ', ' + book.getYear()}">VALUE</p>
+
+<!--/*@thymesVar id="owner" type="com.example.crudapp.models.Person"*/-->
+<div th:if="${owner}">
+  <span>Книга ща у: </span> <span th:text="${owner.getName()}">Person Name</span>
+
+  <form th:method="PATCH" th:action="@{/books/{id}/release(id=${book.getId()})}">
+    <input type="submit" value="Обнавить книгу">
+  </form>
+</div>
+
+<!--/*@thymesVar id="people" type="java.util.List<com.example.creudapp.models.Person>"*/-->
+<!--/*@thymesVar id="person" type="com.example.crudapp.models.Person"*/-->
+<div th:if="${people}">
+  <span>Книга свободна. Кому назначит ее?</span>
+  <form th:method="PATCH" th:action="@{/books/{id}/assign(id=${book.getId()})}">
+    <label for="person">Выберите человека</label>
+    <select th:object="${person}" th:field="*{id}" id="person">
+      <option th:each="person : ${people}" th:value="${person.getId()}" th:text="${person.getName()}"></option>
+    </select>
+    <input type="submit" value="Назначить книгу">
+  </form>
+</div>
+
+<hr>
+
+<form th:method="GET" th:action="@{/books/{id}/edit(id=${book.getId()})}">
+  <input type="submit" value="EDIT">
+</form>
+
+<form th:method="DELETE" th:action="@{/books/{id}(id=${book.getId()})}">
+  <input type="submit" value="Delete">
+</form>
+
+</body>
+</html>

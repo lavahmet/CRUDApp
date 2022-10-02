@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Index</title>
+</head>
+<body>
+<!--/*@thymesVar id="books" type="java.util.List<com.example.credapp.models.Book>"*/-->
+<div th:each="book : ${books}">
+    <!--/*@thymesVar id="book" type="com.example.crudapp.models.Book"*/-->
+    <a th:href="@{/books/{id}(id=${book.getId()})}"
+       th:text="${book.getTitle() + ', ' + book.getAuthor() + ', ' + book.getYear()}">User</a>
+</div>
+<br>
+<hr>
+
+<a href="/books/new">Добавить книгу</a>
+<br>
+
+<a href="/people">Список людей</a>
+</body>
+</html>
